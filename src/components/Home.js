@@ -6,17 +6,21 @@ import {
     Dimensions,
     StyleSheet,
 } from 'react-native';
-import Header from '../components/Header';
-import Flatlist from '../components/Flatlist';
-import AddTodo from '../screens/AddTodo';
+import Header from './Header';
+import Flatlist from './Flatlist';
+import AddTodo from './AddTodo';
 const { width, height } = Dimensions.get('window')
 
 export default class Home extends Component {
+    constructor(props){
+        super(props);
+        console.log(this.props)
+    }
     render(){
         return(
             <View style={{flex:1,backgroundColor:'#fff',width,height}}>
                 <Header navigation={this.props.navigation}/>
-                <Flatlist/>
+                <Flatlist todos={this.props}/>
                 <View style={styles.add}>
                     <TouchableOpacity>
                         <AddTodo/>

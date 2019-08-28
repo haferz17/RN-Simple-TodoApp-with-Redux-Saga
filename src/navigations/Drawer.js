@@ -8,12 +8,13 @@ import  {
     createAppContainer,
     createDrawerNavigator
 } from 'react-navigation';
-import Home from '../screens/Home';
+import Home from '../components/Home';
+import TodoContainer from '../containers/TodoContainer';
 // import DrawerNav from '../components/DrawerNav';
 
 const DrawerNavigator = createDrawerNavigator(
     {
-        MyTodo: Home,
+        MyTodo: TodoContainer,
     },
     {
         initialRouteName:'MyTodo',

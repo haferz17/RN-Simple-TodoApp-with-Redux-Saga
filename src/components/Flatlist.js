@@ -8,49 +8,16 @@ import {
     Modal,
     TouchableOpacity,
     StyleSheet,
-    TextInput
+    TextInput,
+    ActivityIndicator
 } from 'react-native';
-import EditTodo from '../screens/AddTodo';
+import EditTodo from './AddTodo';
 const { width, height } = Dimensions.get('window')
 
 export default class Flatlist extends Component {
     constructor(props){
         super(props);
         this.state = {
-            data: [
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Holiday'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Work'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Wishlist'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Personal'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Holiday'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Work'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Wishlist'
-                },
-                {
-                    todo: 'Go To Beach',
-                    ctg: 'Personal'
-                }
-            ],
             modalVisible: false,
         } 
     }
@@ -60,7 +27,7 @@ export default class Flatlist extends Component {
     }
     _renderItem = ({item}) => {
         let color
-        switch(item.ctg){
+        switch(item.category){
             case 'Holiday':
                 color='#29B6F6'
                 break;
@@ -85,11 +52,11 @@ export default class Flatlist extends Component {
             <View style={{width,alignItems:'center'}}>
                 <View style={{backgroundColor: color,marginTop:20,width:width*0.9,borderRadius:5,flexDirection:'row',alignItems:'center',elevation:3,padding:10}}>
                     <View style={{flex:1,alignItems:'center'}}>
-                        <CheckBox/>
+                        <CheckBox style={{backgroundColor:'#fff'}} value={item.completed}/>
                     </View>
                     <View style={{flex:4}}>
                         <Text style={{color:'#fff',fontSize:17}}>{item.todo}</Text>
-                        <Text style={{color:'#fff'}}>Category : {item.ctg}</Text>
+                        <Text style={{color:'#fff'}}>Category : {item.category}</Text>
                     </View>
                 </View>
             </View>
@@ -97,35 +64,47 @@ export default class Flatlist extends Component {
           </TouchableOpacity>
         )
     }
+    componentDidMount(){
+        this.props.todos.onFetchTodos();  
+    }
     render(){
+        const { todos, loading } = this.props.todos
         return(
             <View style={{flex:1,alignItems:'center'}}>
-                <FlatList
-                    data={this.state.data}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
+            {
+                loading ? 
+                <ActivityIndicator style={{alignSelf:'center',top:height*0.4,}} size="large"/> : 
+                (
+                <View>
+                    <FlatList
+                        data={todos}
+                        keyExtractor = { (item, index) => index.toString() }
+                        renderItem={this._renderItem}
+                    />
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {
                         Alert.alert('Modal has been closed.');
-                }}>
-                    <View style={{flex:1, alignItems: 'center',justifyContent: 'center'}}>
-                        <View style={styles.modal}>
-                            <Text style={{fontSize:20}}>Edit To Do </Text>
-                            <TextInput underlineColorAndroid='#4CAF50' style={{width:'80%'}} placeholder='Your To Do' onChangeText={(text) => this.setState({categoryName: text})}/>
-                            <TextInput underlineColorAndroid='#4CAF50' style={{marginBottom:20,width:'80%'}} placeholder='Category' onChangeText={(text) => this.setState({categoryIcon: text})}/>
-                            <TouchableOpacity style={{position:'absolute',right:'33%',bottom:'10%'}}>
-                                <Text >Edit</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{position:'absolute',right:'10%',bottom:'10%'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                                <Text>Cancel</Text>
-                            </TouchableOpacity>
-                        </View>     
-                    </View>
-                </Modal>
+                    }}>
+                        <View style={{flex:1, alignItems: 'center',justifyContent: 'center'}}>
+                            <View style={styles.modal}>
+                                <Text style={{fontSize:20}}>Edit To Do </Text>
+                                <TextInput underlineColorAndroid='#4CAF50' style={{width:'80%'}} placeholder='Your To Do' onChangeText={(text) => this.setState({categoryName: text})}/>
+                                <TextInput underlineColorAndroid='#4CAF50' style={{marginBottom:20,width:'80%'}} placeholder='Category' onChangeText={(text) => this.setState({categoryIcon: text})}/>
+                                <TouchableOpacity style={{position:'absolute',right:'33%',bottom:'10%'}}>
+                                    <Text >Edit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{position:'absolute',right:'10%',bottom:'10%'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                                    <Text>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>     
+                        </View>
+                    </Modal>
+                </View>
+                )
+            }
             </View>
         )
     }
