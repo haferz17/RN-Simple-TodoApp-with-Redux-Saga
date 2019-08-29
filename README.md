@@ -15,12 +15,12 @@
 ## Screenshots
 
 <div style={flex-direction:row}>
-    <img src="https://imgur.com/j3AiBSa" width=200/>
-    <img src="https://imgur.com/urBXFYW" width=200/>
-    <img src="https://imgur.com/rkPMVQ8" width=200/>
-    <img src="https://imgur.com/oIIQu5O" width=200/>
-    <img src="https://imgur.com/SmlrKOy" width=200/>
-    <img src="https://imgur.com/AXW1F9S" width=200/>
-    <img src="https://imgur.com/f4gxvWr" width=200/>
-    <img src="https://imgur.com/EG9lQzR" width=200/>
+    <img src="https://imgur.com/j3AiBSa.png" width=200/>
+    <img src="https://imgur.com/urBXFYW.png" width=200/>
+    <img src="https://imgur.com/rkPMVQ8.png" width=200/>
+    <img src="https://imgur.com/oIIQu5O.png" width=200/>
+    <img src="https://imgur.com/SmlrKOy.png" width=200/>
+    <img src="https://imgur.com/AXW1F9S.png" width=200/>
+    <img src="https://imgur.com/f4gxvWr.png" width=200/>
+    <img src="https://imgur.com/EG9lQzR.png" width=200/>
 </div>
