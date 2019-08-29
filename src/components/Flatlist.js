@@ -9,21 +9,33 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    Picker
 } from 'react-native';
-import EditTodo from './AddTodo';
+import EditTodo from './EditTodo';
+import DeleteTodo from './DeleteTodo';
 const { width, height } = Dimensions.get('window')
 
 export default class Flatlist extends Component {
     constructor(props){
         super(props);
+        this.handler=this.handler.bind(this)
         this.state = {
             modalVisible: false,
+            id: '',
+            todo: '',
+            category: '',
+            action: ''
         } 
     }
-    
+    handler(){
+        this.setState({action:''})
+    }
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
+    }
+    _onRefresh(){
+        // this.props.todos.onFetchTodos();
     }
     _renderItem = ({item}) => {
         let color
@@ -44,24 +56,29 @@ export default class Flatlist extends Component {
                 color='#29B6F6'
         }
         return (
-            <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-
             <View style={{width,alignItems:'center'}}>
                 <View style={{backgroundColor: color,marginTop:20,width:width*0.9,borderRadius:5,flexDirection:'row',alignItems:'center',elevation:3,padding:10}}>
                     <View style={{flex:1,alignItems:'center'}}>
-                        <CheckBox style={{backgroundColor:'#fff'}} value={item.completed}/>
+                        <CheckBox style={{backgroundColor:'#fff'}} value={item.finish}/>
                     </View>
-                    <View style={{flex:4}}>
+                    <View style={{flex:6,paddingLeft:20}}>
                         <Text style={{color:'#fff',fontSize:17}}>{item.todo}</Text>
                         <Text style={{color:'#fff'}}>Category : {item.category}</Text>
                     </View>
+                    <View style={{flex:2}}>
+                        <Picker
+                            selectedValue={this.state.action}
+                            style={{height: 50, width: '100%'}}
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({action: itemValue, id: item.id, todo: item.todo, category: item.category})
+                        }>
+                            <Picker.Item label="Action ?" value="" />
+                                <Picker.Item label="Edit" value="Edit"/>
+                            <Picker.Item label="Delete" value="Delete" />
+                        </Picker>
+                    </View>
                 </View>
             </View>
-        
-          </TouchableOpacity>
         )
     }
     componentDidMount(){
@@ -69,6 +86,8 @@ export default class Flatlist extends Component {
     }
     render(){
         const { todos, loading } = this.props.todos
+        const { sorted } = this.props
+        const { action } = this.state
         return(
             <View style={{flex:1,alignItems:'center'}}>
             {
@@ -77,33 +96,21 @@ export default class Flatlist extends Component {
                 (
                 <View>
                     <FlatList
-                        data={todos}
+                        data={sorted.length>0 ? sorted:todos}
                         keyExtractor = { (item, index) => index.toString() }
                         renderItem={this._renderItem}
+                        refreshing={loading==undefined?false:loading}
+                        onRefresh={this._onRefresh}
+                        onEndReachedThreshold={0.1}
                     />
-                    <Modal
-                        animationType="fade"
-                        transparent={true}
-                        visible={this.state.modalVisible}
-                        onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                    }}>
-                        <View style={{flex:1, alignItems: 'center',justifyContent: 'center'}}>
-                            <View style={styles.modal}>
-                                <Text style={{fontSize:20}}>Edit To Do </Text>
-                                <TextInput underlineColorAndroid='#4CAF50' style={{width:'80%'}} placeholder='Your To Do' onChangeText={(text) => this.setState({categoryName: text})}/>
-                                <TextInput underlineColorAndroid='#4CAF50' style={{marginBottom:20,width:'80%'}} placeholder='Category' onChangeText={(text) => this.setState({categoryIcon: text})}/>
-                                <TouchableOpacity style={{position:'absolute',right:'33%',bottom:'10%'}}>
-                                    <Text >Edit</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{position:'absolute',right:'10%',bottom:'10%'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                                    <Text>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>     
-                        </View>
-                    </Modal>
+                    {
+                        action == "Edit" ? <EditTodo data={this.state} action={this.handler}/> : null
+                    }
+                    {
+                        action == "Delete" ? <DeleteTodo data={this.state} todos={this.props.todos.todos} func={this.props.todos} action={this.handler}/> : null
+                    }
                 </View>
-                )
+                )    
             }
             </View>
         )

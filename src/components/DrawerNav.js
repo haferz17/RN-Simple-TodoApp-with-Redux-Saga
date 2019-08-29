@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Image, View, StyleSheet, Text, ScrollView, SafeAreaView} from 'react-native';
+import {Image, View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import data from './CategoryData';
 
 class DrawerNav extends Component {
     static navigationOptions = {
@@ -7,23 +8,33 @@ class DrawerNav extends Component {
     }
     render(){
         return(
-            <ScrollView style={{flex:1,width:'90%'}}>
-                <SafeAreaView forceInset={{top:'always',horizontal:'never'}} >
-                    <View style={{flex: 1}}>
-                        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                            <View style={{flex: 1}}>
-                                {/* <Image style={styles.img} source={require('../img.jpg')}/> */}
-                            </View>
-                            <View style={{flex:1,top:55,marginBottom:85,justifyContent: 'center',alignItems: 'center'}}>
-                                    <Text style={{fontSize:20,fontWeight:'bold'}}>M Aftarroziq</Text>
-                            </View>
-                            <View style={{flex:1,width:'90%'}}>
-                                    {/* <ModalCategory navigation={this.props.navigation}/> */}
-                            </View>
-                        </View>  
-                     </View>
-                </SafeAreaView>
-            </ScrollView>
+            <View style={{flex:1}}>
+                <View style={{flex:1,width:'100%',justifyContent:'space-around',alignItems:'center',backgroundColor:'#1de9b6',paddingVertical:10,elevation:7}}>
+                    <View style={{width:'100%',height:'80%',justifyContent:'center',alignItems:'center'}}>
+                        <Image style={{width:'45%',height:'55%'}} source={require('../assets/clipboard-8-64.png')}/>
+                    </View>
+                    <View style={{width:'100%',height:'30%',alignItems:'center'}}>
+                        <Text style={{color:'#fff',fontSize:28,fontWeight:'bold'}}>MyTodoList</Text>
+                    </View>
+                </View>
+                <View style={{flex:2,width:'100%',height:'100%',paddingVertical:10}}>
+                    <View style={{width:'100%',height:'10%',justifyContent:'center'}}>
+                        <Text style={{color:'#1de9b6',fontSize:23,fontWeight:'bold',marginLeft:10}}>Category</Text>
+                    </View>
+                    <View style={{width:'100%',height:'90%'}}>
+                    {
+                        data.map((item, index)=>{
+                            return (
+                                <TouchableOpacity key={index} style={{width:'100%',height:'15%',marginTop:5,flexDirection:'row',alignItems:'center',borderTopWidth:1,borderBottomWidth:1,borderColor:'#1de9b6'}}>
+                                    <Image style={{height:30,width:30,marginLeft:10}} source={{uri:item.icon}}/>
+                                    <Text style={{color:'#1de9b6',fontSize:17,fontWeight:'bold',marginLeft:20}}>{item.name}</Text>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+                    </View>
+                </View>
+            </View>          
         )
     }     
 }

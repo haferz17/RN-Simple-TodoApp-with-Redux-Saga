@@ -16,7 +16,7 @@ export default class Header extends Component {
                 </TouchableOpacity>
                 <Text style={{color:'#fff',fontSize:25}}>To Do App</Text>
                 <TouchableOpacity>
-                    <Image source={require('../assets/settings-48.png')} style={{width:30,height:30}}/>
+                    <Image source={require('../assets/search-3-48.png')} style={{width:27,height:27}}/>
                 </TouchableOpacity>
             </View>
         )
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#1de9b6',
-        elevation:5
+        backgroundColor: '#1de9b6'
     }
 })

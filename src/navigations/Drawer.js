@@ -10,7 +10,7 @@ import  {
 } from 'react-navigation';
 import Home from '../components/Home';
 import TodoContainer from '../containers/TodoContainer';
-// import DrawerNav from '../components/DrawerNav';
+import DrawerNav from '../components/DrawerNav';
 
 const DrawerNavigator = createDrawerNavigator(
     {
@@ -20,7 +20,7 @@ const DrawerNavigator = createDrawerNavigator(
         initialRouteName:'MyTodo',
         drawerWidth: 250,
         drawerPosition:'left',
-        // contentComponent: DrawerNav
+        contentComponent: DrawerNav
     }
 );
 

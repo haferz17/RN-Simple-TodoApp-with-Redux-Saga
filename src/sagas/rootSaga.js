@@ -1,6 +1,11 @@
-import { call, all } from 'redux-saga/effects';
-import { watchFetchTodos } from './todoSagas';
+import { all } from 'redux-saga/effects';
+import { watchFetchTodos, watchAddNewTodo, watchDeleteTodo } from './todoSagas';
 
 export default function* rootSaga() {
-    yield call(watchFetchTodos);              
+    console.log("object");
+    yield all([
+        watchFetchTodos(),
+        watchAddNewTodo(),
+        watchDeleteTodo()
+    ])             
 }

@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 
 //Actions ?
-import { addTodoAction, fetchTodosAction, fetchSuccessAction, fetchFailedAction } from '../actions';
+import { addTodoAction, fetchTodosAction, deleteItemAction, deleteItemSuccessAction, fetchFriendsAction} from '../actions';
 
 const mapStateToProps = (state) => {   
     return {        
         todos: state.todoReducers.todos,
         loading: state.todoReducers.loading,
+        friends: state.todoReducers.friends
     }
 };
 
@@ -22,6 +23,10 @@ const mapDispatchToProps = (dispatch) => {
         // }, 
         onAddTodo: (newTodo) => {                        
             dispatch(addTodoAction(newTodo));
+        },
+        //delete a todo
+        onDeleteItemAction: (deletedTodoId) => {   
+            dispatch(deleteItemAction(deletedTodoId));
         }
     };
 }
