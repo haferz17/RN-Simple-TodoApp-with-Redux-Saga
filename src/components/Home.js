@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Dimensions,
     StyleSheet,
+    StatusBar
 } from 'react-native';
 import Header from './Header';
 import Flatlist from './Flatlist';
@@ -47,6 +48,7 @@ export default class Home extends Component {
         console.log(this.state.data)
         return(
             <View style={{flex:1,backgroundColor:'#fff',width,height}}>
+                <StatusBar backgroundColor='#1de9b6'/>
                 <Header navigation={this.props.navigation}/>
                 <View style={styles.sort}>
                     <TouchableOpacity onPress={()=>this.sort()}>
