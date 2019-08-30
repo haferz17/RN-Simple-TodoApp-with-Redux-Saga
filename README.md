@@ -24,3 +24,8 @@
     <img src="https://imgur.com/f4gxvWr.png" width=200/>
     <img src="https://imgur.com/EG9lQzR.png" width=200/>
 </div>
+
+## Reference
+
+- [https://medium.com/@lavitr01051977/make-your-first-call-to-api-using-redux-saga-15aa995df5b6](https://medium.com/@lavitr01051977/make-your-first-call-to-api-using-redux-saga-15aa995df5b6)
+- [https://www.youtube.com/watch?v=RzzRFJ9AsfU](https://www.youtube.com/watch?v=RzzRFJ9AsfU)
